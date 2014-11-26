@@ -139,8 +139,16 @@ public class GraphTest {
     @Test
     public void getPathWhenDoNotExists() {
         Graph graph = new Graph(lemans, marseille);
-        assertTrue(graph.getAllPaths("Le Mans","Marseille").size() == 0);
+        assertEquals(graph.getAllPaths("Le Mans", "Marseille").size(), 0);
+        assertEquals(graph.getAllPaths(null, "Marseille").size(), 0);
+        assertEquals(graph.getAllPaths("Le Mans", null).size(), 0);
+        assertEquals(graph.getAllPaths(null, null).size(), 0);
+        assertEquals(graph.getAllPaths("toto", "titi").size(), 0);
     }
 
-    //TODO test if from, to null, not in graph...
+    @Test
+    public void getPathWhenFromEqualsTo() {
+        Graph graph = new Graph(lemans, marseille);
+        assertEquals(graph.getAllPaths("Marseille", "Marseille").size(), 0);
+    }
 }

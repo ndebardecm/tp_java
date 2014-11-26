@@ -63,7 +63,7 @@ public class Graph {
         Vertex vertexFrom = this.getVertexFromName(from);
         Vertex vertexTo = this.getVertexFromName(to);
 
-        if (vertexFrom == null || vertexTo == null) //return an empty list
+        if (vertexFrom == null || vertexTo == null || vertexFrom == vertexTo) //return an empty list
             return goodPaths;
 
         //Prepare toBrowse for statement
