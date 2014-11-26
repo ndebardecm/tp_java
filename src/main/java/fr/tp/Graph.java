@@ -67,13 +67,14 @@ public class Graph {
             return goodPaths;
 
         //Prepare toBrowse for statement
-        for (int i = 0; i < vertexFrom.getEdges().size(); i++){
+        List<Vertex> childrenFrom = this.getAllChildrenFromVertex(vertexFrom);
+        for (int i = 0; i < childrenFrom.size(); i++){
             //Convert each child into a list containing it
             List<Vertex> child = new ArrayList<Vertex>();
-            child.add(vertexFrom.getEdges().get(i).getTarget());
+            child.add(childrenFrom.get(i));
 
             //if the child is equal to the target, add it to the good path, else to the paths to browse
-            if(vertexFrom.getEdges().get(i).getTarget() == vertexTo)
+            if(childrenFrom.get(i) == vertexTo)
                 goodPaths.add(child);
             else
                 toBrowse.add(child);
@@ -97,11 +98,13 @@ public class Graph {
             } else {
                 //we add all the new paths to browse (1 per child) to toBrowse list
                 for (int i = 0; i < children.size(); i++){
-                    //duplicate the list and add a child
-                    List<Vertex> pathPlusChild = new ArrayList<Vertex>(toBrowse.get(0));
-                    pathPlusChild.add(children.get(i));
-                    //add the new path to toBrowse object
-                    toBrowse.add(pathPlusChild);
+                    //duplicate the list and add a child, only if it does not create a cycle
+                    if(!(toBrowse.get(0).contains(children.get(i))) && !(children.get(i) == vertexFrom)) {
+                        List<Vertex> pathPlusChild = new ArrayList<Vertex>(toBrowse.get(0));
+                        pathPlusChild.add(children.get(i));
+                        //add the new path to toBrowse object
+                        toBrowse.add(pathPlusChild);
+                    }
                 }
                 //we remove the current path from the toBrowse list
                 toBrowse.remove(0);

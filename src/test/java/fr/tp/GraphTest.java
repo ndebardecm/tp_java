@@ -104,7 +104,8 @@ public class GraphTest {
         List<List<Vertex>> paths = graph.getAllPaths("Paris", "Marseille");
 
         assertNotNull(paths);
-        assertEquals(paths.size(), 2);
+        assertEquals(paths.size(), 1);
+        assertEquals(paths.get(0).size(), 2);
         assertTrue(paths.get(0).contains(lyon));
         assertTrue(paths.get(0).contains(marseille));
         assertFalse(paths.get(0).contains(paris));
@@ -150,5 +151,43 @@ public class GraphTest {
     public void getPathWhenFromEqualsTo() {
         Graph graph = new Graph(lemans, marseille);
         assertEquals(graph.getAllPaths("Marseille", "Marseille").size(), 0);
+    }
+
+    @Test
+    public void getPathsWhenNoStepAndOneCyclePossible() {
+        Graph graph = new Graph(montpellier, toulouse);
+
+        List<List<Vertex>> paths = graph.getAllPaths("Montpellier", "Toulouse");
+
+        assertEquals(paths.size(), 1);
+    }
+
+    @Test
+    public void getPathsWhenOneStepAndOneCyclePossible() {
+        Graph graph = new Graph(montpellier, toulouse, clermont);
+
+        List<List<Vertex>> paths = graph.getAllPaths("Clermont Ferrant", "Toulouse");
+
+        assertEquals(paths.size(), 1);
+        assertTrue(paths.get(0).contains(montpellier));
+        assertTrue(paths.get(0).contains(toulouse));
+    }
+
+    @Test
+    public void getPathsWhenOneStepAndTwoCyclesPossible() {
+        Graph graph = new Graph(montpellier, toulouse, clermont, marseille);
+
+        List<List<Vertex>> paths = graph.getAllPaths("Clermont Ferrant", "Toulouse");
+
+        assertEquals(paths.size(), 2);
+        assertTrue(paths.get(0).contains(montpellier));
+        assertTrue(paths.get(0).contains(toulouse));
+        if(paths.get(0).size() == 3){
+            assertEquals(paths.get(1).size(), 2);
+            assertTrue(paths.get(0).contains(marseille));
+        } else {
+            assertEquals(paths.get(0).size(), 2);
+            assertTrue(paths.get(1).contains(marseille));
+        }
     }
 }
