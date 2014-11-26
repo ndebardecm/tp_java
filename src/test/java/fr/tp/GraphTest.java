@@ -90,10 +90,57 @@ public class GraphTest {
         //Only considerate the children in the graph
         assertFalse(children.contains(lemans));
 
-        assertTrue(children.size() == 2);
+        assertEquals(children.size(), 2);
         assertTrue(children.contains(lyon));
         assertTrue(children.contains(clermont));
         assertFalse(children.contains(marseille));
         assertFalse(children.contains(montpellier));
     }
+
+    @Test
+    public void getPathWithOneStep() {
+        Graph graph = new Graph(paris, lyon, marseille);
+
+        List<List<Vertex>> paths = graph.getAllPaths("Paris", "Marseille");
+
+        assertNotNull(paths);
+        assertEquals(paths.size(), 2);
+        assertTrue(paths.get(0).contains(lyon));
+        assertTrue(paths.get(0).contains(marseille));
+        assertFalse(paths.get(0).contains(paris));
+    }
+
+    @Test
+    public void getAllPathsWithOneStepNoCycle() {
+        Graph graph = new Graph(lemans, nantes, bordeaux);
+
+        List<List<Vertex>> paths = graph.getAllPaths("Le Mans", "Bordeaux");
+        assertNotNull(paths);
+        assertEquals(paths.size(), 2);
+        if(paths.get(0).contains(nantes)){
+            // Path 0 going through nantes so the other must not
+            assertFalse(paths.get(1).contains(nantes));
+            assertTrue(paths.get(0).size() == 2);
+            assertTrue(paths.get(1).size() == 1);
+            assertTrue(paths.get(0).get(1) == bordeaux);
+            assertTrue(paths.get(1).get(0) == bordeaux);
+        } else {
+            // Path 0 not going through nantes
+            assertFalse(paths.get(0).contains(nantes));
+            assertTrue(paths.get(1).size() == 2);
+            assertTrue(paths.get(0).size() == 1);
+            assertTrue(paths.get(0).get(0) == bordeaux);
+            assertTrue(paths.get(1).get(1) == bordeaux);
+        }
+
+        assertFalse(paths.get(0).contains(lemans));
+    }
+
+    @Test
+    public void getPathWhenDoNotExists() {
+        Graph graph = new Graph(lemans, marseille);
+        assertTrue(graph.getAllPaths("Le Mans","Marseille").size() == 0);
+    }
+
+    //TODO test if from, to null, not in graph...
 }
