@@ -1,8 +1,5 @@
 package fr.tp;
 
-/**
- * Created by nico on 25/11/2014.
- */
 public class Edge {
     private Vertex target;
 

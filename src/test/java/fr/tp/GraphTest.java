@@ -57,6 +57,14 @@ public class GraphTest {
     }
 
     @Test
+    public void getVerticeInGraphFromName() {
+        Graph graph = new Graph(paris, lyon);
+
+        Vertex Paris = graph.getVertexFromName("Paris");
+        assertEquals(Paris.getName(),"Paris");
+    }
+
+    @Test
     public void getDistanceForTwoAdjacentVertices() {
         Graph graph = new Graph(paris, lyon);
 
