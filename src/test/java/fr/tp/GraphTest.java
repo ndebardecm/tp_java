@@ -205,4 +205,20 @@ public class GraphTest {
         int distance = graph.getDistance("Clermont Ferrant", "Toulouse");
         assertEquals(distance,578);
     }
+
+    @Test
+    public void getDistanceInEmptyGraph() {
+        Graph graph = new Graph();
+
+        int distance = graph.getDistance("toto","titi");
+        assertEquals(distance, 0);
+    }
+
+    @Test
+    public void getDistanceWhenNoPath() {
+        Graph graph = new Graph(montpellier,marseille,lille);
+
+        int distance = graph.getDistance("Montpellier","Lille");
+        assertEquals(distance, 0);
+    }
 }
