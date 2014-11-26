@@ -20,4 +20,8 @@ public class Vertex {
     public void connectTo(Vertex target, int distance) {
         edges.add(new Edge(target, distance));
     }
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
 }

@@ -3,7 +3,7 @@ package fr.tp;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class GraphTest {
     private Vertex lille = new Vertex("Lille");
@@ -61,7 +61,18 @@ public class GraphTest {
         Graph graph = new Graph(paris, lyon);
 
         Vertex Paris = graph.getVertexFromName("Paris");
+        Vertex notInGraph = graph.getVertexFromName("toto");
+
         assertEquals(Paris.getName(),"Paris");
+        assertNull(notInGraph);
+    }
+
+    @Test
+    public void areVerticesAdjacents() {
+        Graph graph = new Graph(paris, lyon, marseille);
+
+        assertTrue(graph.areVerticesAdjacents(paris, lyon));
+        assertFalse(graph.areVerticesAdjacents(paris, marseille));
     }
 
     @Test

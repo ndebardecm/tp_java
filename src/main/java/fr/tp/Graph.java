@@ -15,7 +15,9 @@ public class Graph {
     }
 
     public int getDistance(String from, String to) {
-        //Get distance of two adjacent vertices
+
+        Vertex vertexFrom = getVertexFromName(from);
+        Vertex vertexTo = getVertexFromName(to);
         return 0;
     }
 
@@ -30,5 +32,14 @@ public class Graph {
                 return this.vertices.get(i);
         }
         return null;
+    }
+
+    public boolean areVerticesAdjacents(Vertex from, Vertex to){
+        List<Edge> edges = from.getEdges();
+        for (int i = 0; i < edges.size(); i++) {
+            if(edges.get(i).getTarget().getName() == to.getName())
+                return true;
+        }
+        return false;
     }
 }
