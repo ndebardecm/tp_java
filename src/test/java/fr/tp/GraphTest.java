@@ -67,13 +67,6 @@ public class GraphTest {
         assertNull(notInGraph);
     }
 
-    @Test
-    public void areVerticesAdjacents() {
-        Graph graph = new Graph(paris, lyon, marseille);
-
-        assertTrue(graph.areVerticesAdjacents(paris, lyon));
-        assertFalse(graph.areVerticesAdjacents(paris, marseille));
-    }
 
     @Test
     public void getDistanceForTwoAdjacentVertices() {

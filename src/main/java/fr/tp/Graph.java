@@ -17,7 +17,14 @@ public class Graph {
     public int getDistance(String from, String to) {
 
         Vertex vertexFrom = getVertexFromName(from);
-        Vertex vertexTo = getVertexFromName(to);
+
+        List<Edge> edges = vertexFrom.getEdges();
+        for (int i = 0; i < edges.size(); i++) {
+            if(edges.get(i).getTarget().getName() == to) {
+                //Adjacent vertices, nothing to do
+                return edges.get(i).getDistance();
+            }
+        }
         return 0;
     }
 
@@ -32,14 +39,5 @@ public class Graph {
                 return this.vertices.get(i);
         }
         return null;
-    }
-
-    public boolean areVerticesAdjacents(Vertex from, Vertex to){
-        List<Edge> edges = from.getEdges();
-        for (int i = 0; i < edges.size(); i++) {
-            if(edges.get(i).getTarget().getName() == to.getName())
-                return true;
-        }
-        return false;
     }
 }
