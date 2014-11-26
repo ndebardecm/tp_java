@@ -63,7 +63,7 @@ public class GraphTest {
     }
 
     @Test
-    public void getVerticeInGraphFromName() {
+    public void getVertexInGraphFromName() {
         Graph graph = new Graph(paris, lyon);
 
         Vertex Paris = graph.getVertexFromName("Paris");
@@ -78,7 +78,7 @@ public class GraphTest {
     public void getDistanceForTwoAdjacentVertices() {
         Graph graph = new Graph(paris, lyon);
 
-        assertEquals(graph.getDistance("Paris", "Lyon"), 465);
+        assertEquals(graph.getLengthBetweenTwoAdjacentVerticies(paris, lyon), 465);
     }
 
     @Test
@@ -189,5 +189,20 @@ public class GraphTest {
             assertEquals(paths.get(0).size(), 2);
             assertTrue(paths.get(1).contains(marseille));
         }
+    }
+
+    @Test
+    public void getTheShortestDistanceBetweenEasyVertices() {
+        Graph graph = new Graph(paris, lyon);
+
+        assertEquals(graph.getDistance("Paris", "Lyon"), 465);
+    }
+
+    @Test
+    public void getTheShortestDistanceBetweenHardVertices() {
+        Graph graph = new Graph(montpellier, toulouse, clermont, marseille);
+
+        int distance = graph.getDistance("Clermont Ferrant", "Toulouse");
+        assertEquals(distance,578);
     }
 }

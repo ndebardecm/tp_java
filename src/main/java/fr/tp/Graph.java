@@ -15,24 +15,29 @@ public class Graph {
     }
 
     public int getDistance(String from, String to) {
+        List<List<Vertex>> goodPaths = this.getAllPaths(from, to);
 
-        Vertex vertexFrom = getVertexFromName(from);
+        if(goodPaths.size() == 0)
+            return 0;
 
-        List<Edge> edges = vertexFrom.getEdges();
-        for (int i = 0; i < edges.size(); i++) {
-            if(edges.get(i).getTarget().getName() == to) {
-                //Adjacent vertices, nothing to do
-                return edges.get(i).getDistance();
+        int shortest = 0;
+        Vertex previous = getVertexFromName(from);
+        for (int i = 0; i < goodPaths.size(); i++){
+            int tempTotal = 0;
+
+            for (int j = 0; j < goodPaths.get(i).size(); j++){
+                //browse the edges so as to get the good one
+                tempTotal += this.getLengthBetweenTwoAdjacentVerticies(previous, goodPaths.get(i).get(j));
+                previous = goodPaths.get(i).get(j);
             }
+
+            //Update the shortest
+            if(tempTotal > shortest)
+                shortest = tempTotal;
         }
-        return 0;
+        return shortest;
     }
 
-    /**
-     * Get a Vertex in the graph from its name
-     * @param name
-     * @return Vertex | null
-     */
     public Vertex getVertexFromName(String name) {
         for (int i = 0; i < this.vertices.size(); i++) {
             if(this.vertices.get(i).getName() == name)
@@ -111,5 +116,14 @@ public class Graph {
             }
         }
         return goodPaths;
+    }
+
+    public int getLengthBetweenTwoAdjacentVerticies(Vertex from, Vertex to){
+        List<Edge> edges = from.getEdges();
+        for (int i = 0; i < edges.size(); i++){
+            if(edges.get(i).getTarget().equals(to))
+                return edges.get(i).getDistance();
+        }
+        return 0;
     }
 }
