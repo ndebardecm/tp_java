@@ -40,4 +40,16 @@ public class Graph {
         }
         return null;
     }
+
+    public List<Vertex> getAllChildrenFromVertex(Vertex vertex) {
+        List<Vertex> children = new ArrayList<Vertex>();
+        List<Edge> edges = vertex.getEdges();
+        for(int i = 0; i < edges.size(); i++){
+            //Check that the vertex is in the graph
+            if(this.getVertexFromName(edges.get(i).getTarget().getName()) == null)
+                continue;
+            children.add(edges.get(i).getTarget());
+        }
+        return children;
+    }
 }

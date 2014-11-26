@@ -3,7 +3,13 @@ package fr.tp;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+import java.util.*;
+
 import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 public class GraphTest {
     private Vertex lille = new Vertex("Lille");
@@ -73,5 +79,21 @@ public class GraphTest {
         Graph graph = new Graph(paris, lyon);
 
         assertEquals(graph.getDistance("Paris", "Lyon"), 465);
+    }
+
+    @Test
+    public void getAllChildrenFromOneVertex() {
+        Graph graph = new Graph(paris, lyon, clermont, marseille);
+
+        List<Vertex> children = graph.getAllChildrenFromVertex(paris);
+
+        //Only considerate the children in the graph
+        assertFalse(children.contains(lemans));
+
+        assertTrue(children.size() == 2);
+        assertTrue(children.contains(lyon));
+        assertTrue(children.contains(clermont));
+        assertFalse(children.contains(marseille));
+        assertFalse(children.contains(montpellier));
     }
 }
